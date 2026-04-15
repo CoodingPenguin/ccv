@@ -1,5 +1,7 @@
 # ccv
 
+[한국어](README.ko.md)
+
 **Claude Code Version Manager** — Install, switch, and manage multiple Claude Code versions with a single symlink.
 
 ```
