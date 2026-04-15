@@ -1,0 +1,59 @@
+#compdef ccv
+# ─────────────────────────────────────────────────────────────────────────────
+# Zsh completion for ccv - Claude Code Version Manager
+# ─────────────────────────────────────────────────────────────────────────────
+
+(( $+functions[_ccv_installed_versions_compadd] )) || _ccv_installed_versions_compadd() {
+  local ccv_dir="${CCV_DIR:-$HOME/.local/share/claude/versions}"
+  local -a versions
+  versions=("$ccv_dir"/*(N:t))
+  (( ${#versions} )) && compadd -X "installed versions" -a versions
+}
+
+(( $+functions[_ccv_remote_versions_compadd] )) || _ccv_remote_versions_compadd() {
+  local cache="${CCV_DIR:-$HOME/.local/share/claude/versions}/.remote-cache"
+  if [[ -f "$cache" ]]; then
+    local -a versions
+    versions=( ${(f)"$(< "$cache")"} )
+    (( ${#versions} )) && compadd -V remote-versions -a versions
+  else
+    _ccv_installed_versions_compadd
+  fi
+}
+
+_ccv() {
+  local -a commands
+  commands=(
+    'current:Show active version'
+    'ls:List installed versions'
+    'ls-remote:List available versions'
+    'install:Install a version'
+    'use:Switch to a version'
+    'rm:Remove a version'
+    'upgrade:Install latest and switch to it'
+    'self-update:Update ccv itself'
+    'notify:Toggle new version notification'
+    'help:Show help'
+  )
+
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[Show help]' \
+    '(-v --version)'{-v,--version}'[Show version]' \
+    '1:command:->command' \
+    '*::args:->args'
+
+  case "$state" in
+    command)
+      _describe -t commands 'ccv command' commands
+      ;;
+    args)
+      case "$words[1]" in
+        use|rm)     _arguments ':version:_ccv_installed_versions_compadd' ;;
+        install)      _arguments ':version:_ccv_remote_versions_compadd' ;;
+        notify) compadd on off ;;
+        ls-remote)  _arguments ':count:' ;;
+        *)          ;;
+      esac
+      ;;
+  esac
+}
