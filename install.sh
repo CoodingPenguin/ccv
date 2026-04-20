@@ -2,7 +2,7 @@
 # ccv installer
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | sh
-#   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.1.0 sh
+#   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.2.0 sh
 set -e
 
 REPO_URL="https://github.com/CoodingPenguin/ccv.git"

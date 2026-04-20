@@ -41,7 +41,7 @@ curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh 
 ### 특정 버전 설치
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.1.0 sh
+curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.2.0 sh
 ```
 
 `CCV_VERSION`에는 임의의 git 태그나 브랜치 이름을 지정할 수 있습니다 (기본값: `main`).

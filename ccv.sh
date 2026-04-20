@@ -22,7 +22,7 @@
 #   ccv --version              Show ccv version
 # ─────────────────────────────────────────────────────────────────────────────
 
-CCV_VERSION="0.1.0"
+CCV_VERSION="0.2.0"
 
 export CCV_DIR="${CCV_DIR:-$HOME/.local/share/claude/versions}"
 export CCV_LINK="${CCV_LINK:-$HOME/.local/bin/claude}"

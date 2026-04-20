@@ -43,7 +43,7 @@ This installs `ccv` to `~/.ccv`, adds the `source` line to `~/.zshrc`, and enabl
 ### Install a specific version
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.1.0 sh
+curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.2.0 sh
 ```
 
 `CCV_VERSION` accepts any git tag or branch name (default: `main`).
