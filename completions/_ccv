@@ -27,6 +27,7 @@ _ccv() {
     'current:Show active version'
     'ls:List installed versions'
     'ls-remote:List available versions'
+    'review:Review changes since current version'
     'install:Install a version'
     'use:Switch to a version'
     'rm:Remove a version'

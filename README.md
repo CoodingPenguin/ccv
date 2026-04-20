@@ -67,6 +67,7 @@ Commands:
   current                Show active version
   ls                     List installed versions
   ls-remote [N]          List available versions (default 15)
+  review                 Review changes since current version
   install <version>      Install a version
   use [version]          Switch version (default: latest installed)
   rm <version>           Remove a version
@@ -82,6 +83,7 @@ Commands:
 ```sh
 ccv install 1.3.0          # install a specific version
 ccv upgrade                # install the latest + switch to it
+ccv review                 # review documented changes before upgrading
 ```
 
 ### List versions
@@ -117,6 +119,22 @@ ccv notify off             # disable
 
 When enabled, `ccv` periodically checks the registry and hints when a newer version is available.
 
+### Review what changed
+
+```sh
+ccv review
+```
+
+`ccv review` compares your active version to the latest published version, fetches the official Claude Code changelog, and summarizes:
+
+- current vs latest version
+- versions covered by the review
+- important changes since your current version
+- potential risk areas such as MCP, permissions, agents, shell, config, and keybindings
+- recommendation cues to help you decide whether to upgrade now or wait
+
+If npm is ahead of the published changelog, `ccv` reviews only the documented releases and warns that the newest release is undocumented.
+
 ### Update ccv itself
 
 ```sh
@@ -130,7 +148,7 @@ For git-based installs (default `~/.ccv`), this runs `git pull` and re-sources `
 The installer sets up zsh tab completion automatically:
 
 ```
-ccv <TAB>         → current, ls, ls-remote, install, use, rm, upgrade, self-update, notify
+ccv <TAB>         → current, ls, ls-remote, review, install, use, rm, upgrade, self-update, notify
 ccv use <TAB>     → list installed versions
 ccv rm <TAB>      → list installed versions
 ccv install <TAB> → suggest remote versions
@@ -149,6 +167,7 @@ autoload -Uz compinit && compinit
 | ------------ | -------------------------------- | ----------------------------- |
 | `CCV_DIR`    | `~/.local/share/claude/versions` | Where versions are installed  |
 | `CCV_LINK`   | `~/.local/bin/claude`            | Symlink path for `claude`     |
+| `CCV_CHANGELOG_URL` | official GitHub raw changelog | Override the changelog source |
 
 Make sure the directory containing `CCV_LINK` is on your `PATH`.
 
