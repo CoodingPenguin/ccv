@@ -165,6 +165,7 @@ autoload -Uz compinit && compinit
 
 | Env var      | Default                          | Description                   |
 | ------------ | -------------------------------- | ----------------------------- |
+| `CCV_HOME`   | `~/.ccv`                         | Where ccv itself is installed |
 | `CCV_DIR`    | `~/.local/share/claude/versions` | Where versions are installed  |
 | `CCV_LINK`   | `~/.local/bin/claude`            | Symlink path for `claude`     |
 | `CCV_CHANGELOG_URL` | official GitHub raw changelog | Override the changelog source |

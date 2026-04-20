@@ -11,7 +11,7 @@ info() { printf " %s→%s %s\n" "$CYAN" "$NC" "$*"; }
 ok()   { printf " %s✓%s %s\n" "$GREEN" "$NC" "$*"; }
 err()  { printf " %s✗%s %s\n" "$RED" "$NC" "$*" >&2; }
 
-CCV_DIR="${CCV_DIR:-$HOME/.ccv}"
+CCV_HOME="${CCV_HOME:-$HOME/.ccv}"
 ZSHRC="${ZDOTDIR:-$HOME}/.zshrc"
 BLOCK_START="# ccv - Claude Code Version Manager"
 BLOCK_END="# /ccv - Claude Code Version Manager"
@@ -33,11 +33,11 @@ remove_shell_config() {
 }
 
 remove_files() {
-  if [ -d "$CCV_DIR" ]; then
-    rm -rf "$CCV_DIR"
-    ok "Removed $CCV_DIR"
+  if [ -d "$CCV_HOME" ]; then
+    rm -rf "$CCV_HOME"
+    ok "Removed $CCV_HOME"
   else
-    info "$CCV_DIR not found, skipping"
+    info "$CCV_HOME not found, skipping"
   fi
 }
 

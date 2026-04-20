@@ -3,10 +3,11 @@
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | sh
 #   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_VERSION=v0.2.0 sh
+#   curl -fsSL https://raw.githubusercontent.com/CoodingPenguin/ccv/main/install.sh | CCV_HOME=/custom/path sh
 set -e
 
 REPO_URL="https://github.com/CoodingPenguin/ccv.git"
-CCV_DIR="${CCV_DIR:-$HOME/.ccv}"
+CCV_HOME="${CCV_HOME:-$HOME/.ccv}"
 CCV_VERSION="${CCV_VERSION:-main}"
 ZSHRC="${ZDOTDIR:-$HOME}/.zshrc"
 BLOCK_START="# ccv - Claude Code Version Manager"
@@ -42,7 +43,7 @@ confirm_installation() {
   [ "$AUTO_YES" -eq 0 ] || return 0
 
   echo "  This will:"
-  printf "    • Install ccv (%s) to %s\n" "$CCV_VERSION" "$CCV_DIR"
+  printf "    • Install ccv (%s) to %s\n" "$CCV_VERSION" "$CCV_HOME"
   printf "    • Add source line to %s\n" "$ZSHRC"
   echo ""
   printf "  Continue? [Y/n] "
@@ -54,16 +55,16 @@ confirm_installation() {
 }
 
 install_files() {
-  if [ -d "$CCV_DIR/.git" ]; then
-    info "Updating ccv in ${DIM}${CCV_DIR}${NC}..."
-    git -C "$CCV_DIR" fetch --tags --quiet origin
-    git -C "$CCV_DIR" checkout --quiet "$CCV_VERSION"
-    git -C "$CCV_DIR" pull --ff-only --quiet 2>/dev/null || true
+  if [ -d "$CCV_HOME/.git" ]; then
+    info "Updating ccv in ${DIM}${CCV_HOME}${NC}..."
+    git -C "$CCV_HOME" fetch --tags --quiet origin
+    git -C "$CCV_HOME" checkout --quiet "$CCV_VERSION"
+    git -C "$CCV_HOME" pull --ff-only --quiet 2>/dev/null || true
   else
-    info "Installing ccv (${CCV_VERSION}) to ${DIM}${CCV_DIR}${NC}..."
-    [ -e "$CCV_DIR" ] && { err "$CCV_DIR exists but is not a git repo"; exit 1; }
-    git clone --quiet "$REPO_URL" "$CCV_DIR"
-    git -C "$CCV_DIR" checkout --quiet "$CCV_VERSION"
+    info "Installing ccv (${CCV_VERSION}) to ${DIM}${CCV_HOME}${NC}..."
+    [ -e "$CCV_HOME" ] && { err "$CCV_HOME exists but is not a git repo"; exit 1; }
+    git clone --quiet "$REPO_URL" "$CCV_HOME"
+    git -C "$CCV_HOME" checkout --quiet "$CCV_VERSION"
   fi
   ok "Files installed."
 }

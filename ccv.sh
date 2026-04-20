@@ -480,7 +480,7 @@ _ccv_cmd_upgrade() {
 }
 
 _ccv_cmd_self_update() {
-  local ccv_home="$HOME/.ccv"
+  local ccv_home="${CCV_HOME:-$HOME/.ccv}"
   if [[ -d "$ccv_home/.git" ]]; then
     _ccv_log_info "Updating ccv..."
     git -C "$ccv_home" pull --ff-only 2>/dev/null && \

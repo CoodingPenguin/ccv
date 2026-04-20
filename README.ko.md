@@ -163,6 +163,7 @@ autoload -Uz compinit && compinit
 
 | 환경변수      | 기본값                             | 설명                          |
 | ------------ | -------------------------------- | ----------------------------- |
+| `CCV_HOME`   | `~/.ccv`                         | ccv 자체가 설치되는 디렉토리   |
 | `CCV_DIR`    | `~/.local/share/claude/versions` | 버전이 설치되는 디렉토리       |
 | `CCV_LINK`   | `~/.local/bin/claude`            | `claude` 심볼릭 링크 경로     |
 | `CCV_CHANGELOG_URL` | 공식 GitHub raw changelog | changelog 소스 URL 재정의     |
