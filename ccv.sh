@@ -408,10 +408,34 @@ _ccv_cmd_install() {
     return 1
   fi
 
-  # the installer switches the symlink; restore previous version if there was one
+  # the installer writes the new binary directly to $CCV_LINK as a regular file.
+  # move it into the versioned dir before restoring any previous symlink, otherwise
+  # `ln -sf` over the regular file would delete the freshly installed binary.
+  mkdir -p "$CCV_DIR"
+  if [[ -f "$CCV_LINK" && ! -L "$CCV_LINK" ]]; then
+    mv -f "$CCV_LINK" "$CCV_DIR/$version"
+    chmod +x "$CCV_DIR/$version"
+  elif [[ -L "$CCV_LINK" ]] && ! _ccv_version_exists "$version"; then
+    # installer kept symlink form but pointed it elsewhere — copy through the link
+    local resolved
+    resolved=$(readlink "$CCV_LINK")
+    if [[ -f "$resolved" ]]; then
+      cp "$resolved" "$CCV_DIR/$version"
+      chmod +x "$CCV_DIR/$version"
+    fi
+  fi
+
+  if ! _ccv_version_exists "$version"; then
+    _ccv_log_error "Installer finished but $version was not found at $CCV_LINK"
+    return 1
+  fi
+
+  # restore previous active version; otherwise point the symlink at the new install
   if [[ -n "$prev" ]] && [[ "$prev" != "$version" ]] && _ccv_version_exists "$prev"; then
     ln -sf "$CCV_DIR/$prev" "$CCV_LINK"
     _ccv_log_info "Restored active version to $prev"
+  else
+    ln -sf "$CCV_DIR/$version" "$CCV_LINK"
   fi
 
   _ccv_log_success "Installed $version"
